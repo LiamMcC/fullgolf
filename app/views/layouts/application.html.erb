@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GolfStore</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+  </head>
+
+  <body>
+    
+    
+    
+    <header class="headSec">
+      <h1>Wednesday Night Golf Goodies!</h1>
+      
+      <ul>
+        <li><%= link_to "HOME", "/" %></li>
+        <li><%= link_to "PRODUCTS", "/items" %></li>
+
+        <li><%= link_to "New About", "/dynamicpage/about" %></li>
+        <li><%= link_to "New Help", "/dynamicpage/help" %></li>
+        
+        
+        
+         <% if user_signed_in? %>
+                 <li><a href="#">Hi <%= current_user.username %></a></li>
+                 <li><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
+          <li><%= link_to 'Edit Profile', edit_user_registration_path %></li>
+          <% else %>
+                 <li><%= link_to 'Register', new_user_registration_path %></li> 
+                 <li><%= link_to 'Sign in', new_user_session_path %></li>
+          <% end %>
+
+        
+        
+        <% @categories.each do |category| %>
+     
+           
+           <li><a href="/category/<%= category.title %>"><%= category.title %></a></li>
+        
+    
+    <% end %>
+        
+        
+        
+        
+        
+        
+        <li><%= link_to "OLD LOG OUT", "/logout" %></li>
+         <li><a href="/cart" >Cart (€<%= session[:howMuch] %>)</a></li>
+        
+      </ul>
+      
+    </header>
+    
+    <div class="container">
+      <%=render 'layouts/search'%>
+      <%= yield %>
+      
+    </div>
+    
+    <footer class="footer">
+      <h1>Look Im At The Bottom.....</h1>
+              <li><%= link_to "ABOUT", about_path %></li>
+        <li><%= link_to "HELP", help_path %></li>
+        <li><%= link_to "ALL USERS", "/allusers" %></li>
+        <li><%= link_to "OLD LOG IN", "/login" %></li>
+    </footer>
+  </body>
+</html>
